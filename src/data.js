@@ -71,7 +71,7 @@ export const projects = [
 ];
 
 export const education = [
-  { title: "B.E. in Computer Science", org: "Rajiv Gandhi Institute of Technology, India", period: "2015 – 2019" }
+  { title: "B.Tech. in Computer Science", org: "Rajiv Gandhi Institute of Technology, India", period: "2015 – 2019" }
 ];
 
 export const certifications = [
