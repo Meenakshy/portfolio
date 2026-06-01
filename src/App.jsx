@@ -16,7 +16,25 @@ const Section = ({ id, title, children }) => (
   </section>
 )
 
-const Chip = ({ label }) => <span className="chip">{label}</span>
+const Chip = ({ label, skill }) => (
+  <span className={`chip${skill ? ' chip--skill' : ''}`}>{label}</span>
+)
+
+const Card = ({ className = '', children, animate = false }) => {
+  const classes = `card ${className}`.trim()
+  if (!animate) return <div className={classes}>{children}</div>
+  return (
+    <motion.div
+      className={classes}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-32px' }}
+      transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export default function App() {
   return (
@@ -24,7 +42,7 @@ export default function App() {
       <nav className="nav">
         <div className="nav-inner">
           <div className="brand">MK</div>
-          <div>
+          <div className="nav-links">
             <a href="#about">About</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
@@ -35,16 +53,15 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <header className="container hero v2">
         <motion.div
           className="hero-text"
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
         >
           <h1>{profile.name}</h1>
-          <p className="muted">{profile.title}</p>
+          <p className="hero-role">{profile.title}</p>
           <p className="tagline">{profile.summary}</p>
           <div className="links">
             <Anchor href={`mailto:${profile.email}`}>Email</Anchor>
@@ -56,35 +73,34 @@ export default function App() {
           src={profileImg}
           alt="Profile photo"
           className="hero-photo"
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         />
       </header>
 
       <Section id="about" title="About">
         <div className="grid">
-          <div className="card">
-            <p className="muted">
+          <Card>
+            <p>
               Based in {profile.location}. Focused on backend and full-stack engineering, cloud services, and data workflows — experienced with Python/Django, FastAPI, React/Next.js, AWS, and GCP.
             </p>
-          </div>
+          </Card>
         </div>
       </Section>
 
       <Section id="experience" title="Experience">
         <div className="grid">
           {experience.map((exp, i) => (
-            <div className="card" key={i}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <div>
-                  <strong>{exp.company}</strong> — {exp.role}
+            <Card key={i} animate>
+              <div className="card-header">
+                <div className="card-title">
+                  {exp.company}
+                  <span className="role"> · {exp.role}</span>
                 </div>
-                <div className="muted">{exp.period}</div>
+                <div className="card-meta">{exp.period}</div>
               </div>
-              <div className="muted" style={{ marginTop: 6 }}>
-                {exp.location}
-              </div>
+              <p className="card-location">{exp.location}</p>
               <ul>
                 {exp.bullets.map((b, j) => (
                   <li key={j}>{b}</li>
@@ -95,7 +111,7 @@ export default function App() {
                   <Chip key={k} label={s} />
                 ))}
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </Section>
@@ -103,29 +119,22 @@ export default function App() {
       <Section id="projects" title="Projects">
         <div className="grid">
           {projects.map((p, i) => (
-            <motion.div
-              className="card half"
-              key={i}
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3 }}
-            >
-              <h3 style={{ marginTop: 0 }}>{p.title}</h3>
+            <Card key={i} className="half" animate>
+              <h3>{p.title}</h3>
               <p className="muted">{p.description}</p>
               <div className="chips">
                 {p.tech.map((t, k) => (
                   <Chip key={k} label={t} />
                 ))}
               </div>
-              <div className="links" style={{ marginTop: 12 }}>
+              <div className="links">
                 {p.links.map((l, k) => (
                   <Anchor key={k} href={l.href}>
                     {l.label}
                   </Anchor>
                 ))}
               </div>
-            </motion.div>
+            </Card>
           ))}
         </div>
       </Section>
@@ -133,53 +142,53 @@ export default function App() {
       <Section id="skills" title="Skills">
         <div className="grid">
           {Object.entries(skills).map(([k, arr], i) => (
-            <div className="card half" key={i}>
-              <strong>{k.replace('_', ' & ')}</strong>
-              <div className="chips" style={{ marginTop: 10 }}>
+            <Card key={i} className="half" animate>
+              <span className="skill-group-title">{k.replace(/_/g, ' & ')}</span>
+              <div className="chips chips--flush">
                 {arr.map((s, j) => (
-                  <Chip key={j} label={s} />
+                  <Chip key={j} label={s} skill />
                 ))}
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </Section>
 
       <Section id="education" title="Education & Certifications">
         <div className="grid">
-          <div className="card half">
-            <ul style={{ marginTop: 0 }}>
+          <Card className="half" animate>
+            <ul>
               {education.map((e, i) => (
                 <li key={i}>
                   <strong>{e.title}</strong> — {e.org} ({e.period})
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="card half">
-            <ul style={{ marginTop: 0 }}>
+          </Card>
+          <Card className="half" animate>
+            <ul>
               {certifications.map((c, i) => (
                 <li key={i}>
                   <strong>{c.title}</strong> — {c.org} ({c.year})
                 </li>
               ))}
             </ul>
-          </div>
+          </Card>
         </div>
       </Section>
 
       <Section id="contact" title="Contact">
         <div className="grid">
-          <div className="card">
-            <div className="links">
+          <Card>
+            <div className="links links--flush">
               <Anchor href={`mailto:${profile.email}`}>Email</Anchor>
               <Anchor href={profile.github}>GitHub</Anchor>
               <Anchor href={profile.linkedin}>LinkedIn</Anchor>
             </div>
-            <p className="muted" style={{ marginTop: 12 }}>
+            <p className="muted contact-note">
               Available for backend/full-stack roles and cloud-focused projects.
             </p>
-          </div>
+          </Card>
         </div>
       </Section>
 
