@@ -22,6 +22,24 @@ export const skills = {
 
 export const experience = [
   {
+    company: "Quartech",
+    role: "AWS Developer",
+    location: "Vancouver, BC",
+    period: "Nov 2025 – Mar 2026",
+    bullets: [
+      "Worked with BC Provincial Health Department, delivering high-impact solutions for the pathology department at Vancouver Children's and Women's Hospital — automating pipelines and integrating AI for high-performance analysis of medical images.",
+      "Automated AI-driven pathology pipelines for BC Children's and Women's Hospital, reducing manual intervention by 90% and significantly increasing clinical throughput for faster patient diagnoses.",
+      "Integrated on-prem hospital infrastructure with AWS using File Gateway and DataSync, cutting manual data handling and ensuring near real-time cloud availability for critical medical data.",
+      "Architected scalable AWS infrastructure using AWS CDK factory patterns, improving deployment consistency and reducing environment setup time by 70% to accelerate project delivery cycles.",
+      "Engineered event-driven data pipelines using Lambda, S3, DynamoDB, SQS, SNS, EventBridge, Systems Manager, Step Functions, and AWS HealthLake, increasing pipeline reliability and drastically reducing data processing failures for sensitive FHIR health records.",
+      "Deployed continuous monitoring and tracing via CloudWatch and AWS X-Ray, reducing Mean Time to Detect and Resolve (MTTR) for performance issues by 40% and ensuring high system uptime.",
+      "Developed automated CI/CD pipelines with GitHub Actions, reducing deployment time by 80% and release failures by 50% to foster a more agile and stable development lifecycle.",
+      "Led unit and integration testing strategy and enforced test execution in CI pipelines, reducing production defects.",
+      "Collaborated with cross-functional clinical and IT teams to deliver scalable solutions that aligned technical infrastructure with hospital operational goals."
+    ],
+    stack: ["Python", "TypeScript", "AWS CDK", "GitHub Actions", "Docker", "Lambda", "SNS", "SQS", "S3", "DynamoDB", "DataSync", "CloudWatch", "AWS X-Ray"]
+  },
+  {
     company: "Vosyn",
     role: "Software Engineer",
     location: "Mississauga, ON (Remote)",
